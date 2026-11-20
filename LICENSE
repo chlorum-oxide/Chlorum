@@ -1,0 +1,30 @@
+Chlorine-35 Public Research License (C35-PRL)
+
+Copyright (c) 2026 The Chlorum Working Group
+
+1. DEFINITIONS
+   "The Software" means chlorum-core and all of its accompanying
+   source files, documentation and build artifacts.
+
+2. GRANT
+   Permission is granted, free of charge, to any person obtaining a
+   copy of the Software, to use, copy, modify and merge the Software,
+   subject to all of the following conditions:
+
+   a) The Software may only be deployed in environments the user is
+      explicitly authorized to test, or on hardware the user owns.
+   b) The Software may not be redistributed in compiled or packaged
+      form. Derivative works must be published in source form under
+      this same license.
+   c) Attribution must be preserved in all source files.
+
+3. NO WARRANTY
+   The Software is provided "as is", without warranty of any kind,
+   express or implied. The authors are not liable for any claim,
+   damages or other liability arising from the use of the Software.
+
+4. TERMINATION
+   Any breach of condition 2a or 2b terminates the license granted
+   under this agreement immediately and retroactively.
+
+THE ISOTOPE IS STABLE. THE LICENSE IS FINAL.

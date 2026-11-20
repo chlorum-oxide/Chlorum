@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>chlorum — access</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="scanlines"></div>
+
+<div class="login-wrap">
+  <div class="login-box">
+    <div class="brand center">
+      <span class="element-box">Cl<span class="mass">35.45</span></span>
+      <span class="brand-name">chlorum</span>
+    </div>
+    <p class="hint center-text">phosphor console — authorized operators only</p>
+
+    <div class="toggle-row">
+      <button id="tab-login" class="btn ghost active">log in</button>
+      <button id="tab-signup" class="btn ghost">first key</button>
+    </div>
+
+    <form id="form-login">
+      <label class="field">email
+        <input type="email" id="login-email" autocomplete="username" required>
+      </label>
+      <label class="field">passphrase
+        <input type="password" id="login-pass" autocomplete="current-password" required>
+      </label>
+      <button class="btn primary wide" type="submit">unlock</button>
+      <div id="login-msg" class="msg"></div>
+    </form>
+
+    <form id="form-signup" class="hidden">
+      <label class="field">email
+        <input type="email" id="signup-email" autocomplete="username" required>
+      </label>
+      <label class="field">passphrase <span class="hint">(>= 10 chars)</span>
+        <input type="password" id="signup-pass" autocomplete="new-password" required>
+      </label>
+      <button class="btn primary wide" type="submit">hold the keys</button>
+      <div id="signup-msg" class="msg"></div>
+      <p class="hint">the first keyholder becomes the deployment admin.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+const show = (id) => {
+  document.getElementById("form-login").classList.toggle("hidden", id !== "login");
+  document.getElementById("form-signup").classList.toggle("hidden", id !== "signup");
+  document.getElementById("tab-login").classList.toggle("active", id === "login");
+  document.getElementById("tab-signup").classList.toggle("active", id === "signup");
+};
+document.getElementById("tab-login").onclick = () => show("login");
+document.getElementById("tab-signup").onclick = () => show("signup");
+
+async function post(path, form, msgId) {
+  const body = Object.fromEntries(new FormData(form).entries());
+  const res = await fetch(path, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (res.ok) {
+    location.href = "/";
+  } else {
+    document.getElementById(msgId).textContent = json.error || `error ${res.status}`;
+  }
+}
+document.getElementById("form-login").onsubmit = (e) => { e.preventDefault(); post("/api/auth/login", e.target, "login-msg"); };
+document.getElementById("form-signup").onsubmit = (e) => { e.preventDefault(); post("/api/auth/signup", e.target, "signup-msg"); };
+
+fetch("/api/auth/me").then((r) => { if (r.ok) location.href = "/"; });
+</script>
+</body>
+</html>
